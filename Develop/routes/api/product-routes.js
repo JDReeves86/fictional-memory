@@ -22,15 +22,18 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
+// SEE LINE 29
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  // IS THERE A WAY TO ONLY SHOW THE TAG_NAME AND NOT ALL THE OTHER TAG DATA?
   try {
     const prodID = await Product.findByPk(req.params.id, {
       include: [{ model: Category}, { model: Tag }]
     });
     if (!prodID) {
-      res.status(200).json({message: 'No matching products found!'})
+      res.status(200).json({message: 'No matching products found!'});
+      return;
     }
     res.status(200).json(prodID)
   } 
@@ -115,7 +118,6 @@ router.put('/:id', async (req, res) => {
 });
 
   // delete one product by its `id` value
-  // DELETE WORKS, BUT TAKES FOREVER FOR INSOMNIA TO RESPOND, SEEMS TO TIME OUT??
 router.delete('/:id', async (req, res) => {
   try {
     const removedProd = await Product.destroy({
