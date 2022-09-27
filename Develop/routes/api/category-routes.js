@@ -47,11 +47,11 @@ router.post('/', async (req, res) => {
 
 });
 
+// SEE LINE 66
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
   try {
-    const changedCat = await Category.update(
-      {
+    const changedCat = await Category.update({
         category_name: req.body.categoryName
       },
       {
