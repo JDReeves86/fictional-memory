@@ -56,12 +56,16 @@ router.put('/:id', async (req, res) => {
       },
       {
         where: {
-          category_id: req.params.id
+          id: req.params.id
         },
-      },
-    );
+      });
+    if (!changedCat) {
+        res.status(200).json({message: 'No matching categories found!'});
+        return;
+    }
+    // IF BLOCK DOES NOT APPEAR TO BE DOING ANYTHING? NO ERRORS THROWN, SEEMS TO INDICATE ITEMS CHANGED DESPITE NO ITEM BEING PRESENT.
     res.status(200).json(changedCat)
-  } 
+  }
   catch(err) {res.status(500).json(err)}
 });
 
@@ -71,10 +75,13 @@ router.delete('/:id', async (req, res) => {
     const removedCat = await Category.destroy(
       {
         where: {
-          category_id: req.params.id,
+          id: req.params.id,
         },
-      },
-    );
+      });
+    if (!removedCat) {
+      res.status(200).json({message: 'No matching categories found!'});
+      return;
+    }
     res.status(200).json(removedCat)
   } 
   catch (err) {res.status(500).json(err)}

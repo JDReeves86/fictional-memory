@@ -7,28 +7,39 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-  const prodData = await Product.findAll({
-    attributes: ["product_id", "product_name", "price", "stock", "category_id"]
-  });
+  try{
+    const prodData = await Product.findAll({
+      include: [{ model: Category }, { model: Tag }]
+    });
+    if (!prodData) {
+      res.status(200).json({message: 'No products found!'});
+      return;
+    }
+    res.json(prodData)
+  } 
+  catch(err) {res.status(500).json(err)}
 
-  res.json(prodData)
 });
 
 // get one product
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  const prodID = await Product.findOne(
-    {
-      where: {
-        product_id: req.params.id
-      },
-    },
-    );
+  try {
+    const prodID = await Product.findByPk(req.params.id, {
+      include: [{ model: Category}, { model: Tag }]
+    });
+    if (!prodID) {
+      res.status(200).json({message: 'No matching products found!'})
+    }
     res.status(200).json(prodID)
+  } 
+  catch(err) {res.status(500).json(err)}
+
 });
 
 // create new product
+// WORKS AS IS? I DON'T SEE ANYTHING TO CHANGE HERE...
 router.post('/', async (req, res) => {
   /* req.body should look like this...
     {
@@ -61,7 +72,8 @@ router.post('/', async (req, res) => {
 });
 
 // update product
-router.put('/:id', (req, res) => {
+// DOESN'T DELETE TAG IDS, ONLY ADDS THE NEW ONES ON.. NOT SURE WHY?
+router.put('/:id', async (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -102,8 +114,20 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  // DELETE WORKS, BUT TAKES FOREVER FOR INSOMNIA TO RESPOND, SEEMS TO TIME OUT??
+router.delete('/:id', async (req, res) => {
+  try {
+    const removedProd = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+  if (!removedProd) {
+    res.status(200).json({message: "No product to delete!"});
+    return;
+  }
+  } catch(err) {res.status(200).json(err)}
 });
 
 module.exports = router;
