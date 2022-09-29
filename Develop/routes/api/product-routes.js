@@ -9,7 +9,11 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Category and Tag data
   try{
     const prodData = await Product.findAll({
-      include: [{ model: Category }, { model: Tag }]
+      include: [{ model: Category }, { model: Tag }],
+      attributes: [
+        tag_name,
+        tag_id
+      ]
     });
     if (!prodData) {
       res.status(200).json({message: 'No products found!'});
@@ -22,14 +26,12 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-// SEE LINE 29
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  // IS THERE A WAY TO ONLY SHOW THE TAG_NAME AND NOT ALL THE OTHER TAG DATA?
   try {
     const prodID = await Product.findByPk(req.params.id, {
-      include: [{ model: Category}, { model: Tag }]
+      include: [{ model: Category }, { model: Tag }]
     });
     if (!prodID) {
       res.status(200).json({message: 'No matching products found!'});
@@ -75,14 +77,13 @@ router.post('/', async (req, res) => {
 
 // update product
 router.put('/:id', async (req, res) => {
-  // console.log(res.body)
+
   // update product data
   Product.update(req.body, {
     where: {
       id: req.params.id,
     },
   })
-  // const productTags = await ProductTag.findAll({ where: { product_id: req.params.id } });
     .then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
