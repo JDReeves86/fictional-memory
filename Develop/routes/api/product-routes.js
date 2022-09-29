@@ -42,7 +42,6 @@ router.get('/:id', async (req, res) => {
 });
 
 // create new product
-// WORKS AS IS? I DON'T SEE ANYTHING TO CHANGE HERE...
 router.post('/', async (req, res) => {
   /* req.body should look like this...
     {
@@ -75,14 +74,15 @@ router.post('/', async (req, res) => {
 });
 
 // update product
-// DOESN'T DELETE TAG IDS, ONLY ADDS THE NEW ONES ON.. NOT SURE WHY?
 router.put('/:id', async (req, res) => {
+  // console.log(res.body)
   // update product data
   Product.update(req.body, {
     where: {
       id: req.params.id,
     },
   })
+  // const productTags = await ProductTag.findAll({ where: { product_id: req.params.id } });
     .then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
@@ -103,7 +103,6 @@ router.put('/:id', async (req, res) => {
       const productTagsToRemove = productTags
         .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
         .map(({ id }) => id);
-
       // run both actions
       return Promise.all([
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
@@ -112,7 +111,6 @@ router.put('/:id', async (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
       res.status(400).json(err);
     });
 });
