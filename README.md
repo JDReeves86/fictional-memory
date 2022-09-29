@@ -1,3 +1,110 @@
+# Challenge 13 - fictional-memory-ECommerce-BackEnd
+
+
+## E-Commerce Back End
+
+---
+
+### Contents 
+
+---
+
+1. Objectives
+2. About
+3. Screenshots
+4. Links
+5. Assignment details & grading rubric (*ignore me*)
+
+<br>
+<br>
+
+### Objectives ###
+
+---
+
+<br>
+
+1. WHEN the user adds their database name, MySQL username, and MySQL password to an environment variable file, they are able to connect to a database using Sequelize.
+
+2. WHEN users enter schema and seed commands, a development database is created and is seeded with test data.
+
+3. WHEN users enter the command to invoke the application the server is started and the Sequelize models are synced to the MySQL database.
+
+4. WHEN  API GET routes are opened in Insomnia for categories, products, or tags, the data for each of these routes is displayed in a formatted JSON.
+
+5. WHEN  API POST, PUT, and DELETE routes are tested in Insomnia, the user is able to successfully create, update, and delete data in their database.
+
+<br>
+<br>
+
+### About ###
+
+---
+
+<br>
+
+1. WHEN the user adds their database name, MySQL username, and MySQL password to an environment variable file, they are able to connect to a database using Sequelize.
+    > The user can create a .env file and input their databse name, username, and password to allow for MYSQL to connect to the database using port 3306. 
+
+2. WHEN users enter schema and seed commands, a development database is created and is seeded with test data.
+    > There is an included Schema file and seed commands that the user can run to set up the database with some data to start. Thsi can eb done by running the source command in mysql, and then after that is complete, returing to the command line and running the command "npm run seed" to populate the newly created databse with some test data. 
+
+3. WHEN users enter the command to invoke the application the server is started and the Sequelize models are synced to the MySQL database.
+    >  The user can start the express server using the command "npm start" from the command line. Once this is completed, the models are synced to the database that was created in the initial step. 
+
+4. WHEN  API GET routes are opened in Insomnia for categories, products, or tags, the data for each of these routes is displayed in a formatted JSON.
+    > There are GET routes for categories, products, and tags that the user can test in insomnia. They may choose to return all of the desired items by navigating to the api/DESIRED_ITEM and submitting a GET request. Or you can select a specific item by the ID by adding the desired id to the route.
+
+5. WHEN  API POST, PUT, and DELETE routes are tested in Insomnia, the user is able to successfully create, update, and delete data in their database.
+    > The user is able to make POST requests and submit a json object with the desired category/product/tag information and add it to the database. PUT requests to change existing items are also avaialble as long at the user places the desired product id in the route path to select the correct item.
+
+<br>
+<br>
+
+### Screenshots ###
+
+---
+
+<br>
+
+N/A
+
+<br>
+
+### Links ###
+
+---
+
+<br>
+
+
+Link to Github repo: https://github.com/JDReeves86/fictional-memory-ECommerce-BackEnd
+
+Link to video walkthrough: https://drive.google.com/file/d/1qZEcXgSSNjz4lG3aK4qoPhvBHOXmIgiP/view
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+---
+
+---
+
+## Assignment Details & Grading Rubric ##
+
+---
+
+---
+
+<br>
+<br>
+
 # 13 Object-Relational Mapping (ORM): E-Commerce Back End
 
 ## Your Task
